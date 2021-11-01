@@ -1,5 +1,7 @@
 package edu.egg.libreriaboot.service;
 
+import edu.egg.libreriaboot.entity.Autor;
+import edu.egg.libreriaboot.entity.Editorial;
 import edu.egg.libreriaboot.entity.Libro;
 import edu.egg.libreriaboot.excepcion.MiExcepcion;
 import edu.egg.libreriaboot.repository.AutorRepository;
@@ -40,9 +42,9 @@ public class LibroService {
     }
     
     @Transactional
-    public void modificar(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados){
+    public void modificar(String id, Long isbn, String titulo, Integer anio, Integer ejemplares, Integer ejemplaresPrestados, Autor autor, Editorial editorial){
         Integer ejemplaresRestantes = restantes(ejemplares, ejemplaresPrestados);
-        libroRepository.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes);
+        libroRepository.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, autor, editorial);
     }
     
     @Transactional(readOnly = true)

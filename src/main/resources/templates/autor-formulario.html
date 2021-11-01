@@ -21,6 +21,7 @@
         <hr class="mb-5 col-xl-12" />
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate 
               th:action="@{/autores/__${action}__}" th:object="${autor}">
+            <input th:field="*{id}" type="hidden" />
             <div class="form-floating mb-3 col-xl-6">
                 <input class="form-control" id="nombre" placeholder="Nombre" th:field="*{nombre}" required type="text" />
                 <label for="nombre">Nombre</label>

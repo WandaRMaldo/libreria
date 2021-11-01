@@ -51,5 +51,8 @@ public class Autor {
         this.alta = alta;
     }
     
-    
+    @Override
+    public String toString() {
+        return String.format("%-40s", nombre);
+    }
 }

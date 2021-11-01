@@ -19,9 +19,11 @@
     <div class="container mt-5 main">
         <h2 th:text="${title}"></h2>
         <hr class="mb-5 col-xl-12" />
-        <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate 
-              th:action="@{/libros/__${action}__}" th:object="${libro}">
-            <input th:field="*{id}" type="hidden"/>
+        <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
+            th:action="@{/libros/__${action}__}"
+            th:object="${libro}"
+        >
+        <input th:field="*{id}" type="hidden" />
             <div class="form-floating mb-3 col-xl-6">
                 <input class="form-control" id="isbn" placeholder="Isbn" th:field="*{isbn}" required type="text" />
                 <label for="isbn">Isbn</label>
@@ -33,40 +35,47 @@
                 <div class="invalid-feedback">El titulo es obligatorio</div>
             </div>
             <div class="form-floating mb-3 col-xl-6">
-                <input class="form-control" id="anio" placeholder="anio" th:field="*{anio}" required type="text" />
+                <input class="form-control" id="anio" placeholder="año" th:field="*{anio}" required type="number" />
                 <label for="anio">Año</label>
                 <div class="invalid-feedback">El año es obligatorio</div>
             </div>
             <div class="form-floating mb-3 col-xl-6">
-                <input class="form-control" id="ejemplares" placeholder="Ejemplares" th:field="*{ejemplares}" required type="text" />
+                <input class="form-control" id="ejemplares" placeholder="Ejemplares" th:field="*{ejemplares}" required type="number" />
                 <label for="ejemplares">Ejemplares</label>
                 <div class="invalid-feedback">Los ejemplares son obligatorios</div>
             </div>
             <div class="form-floating mb-3 col-xl-6">
-                <input class="form-control" id="ejemplares-prestados" placeholder="Ejemplares-Prestados" th:field="*{ejemplaresPrestados}" required type="text" />
+                <input class="form-control" id="ejemplares-prestados" placeholder="Ejemplares-Prestados" th:field="*{ejemplaresPrestados}" required type="number" />
                 <label for="ejemplares-prestados">Ejemplares Prestados</label>
                 <div class="invalid-feedback">Los ejemplares prestados son obligatorios</div>
             </div>
+        
             <div class="form-floating mb-3 col-xl-6">
                     <select aria-label="Elegir autor" class="form-select" id="autor" th:field="*{autor}">
                         <option selected value="">Elegir autor</option>
-                        <option th:each="autor : ${autores}" th:text="${autor.nombre}"
-                                th:value="${autor.id}"></option>
+                        <option th:each="autor : ${autores}" th:text="|${autor.nombre}|"
+                                th:value="${autor.id}">
+                        </option>
                     </select>
-                    <label for="autor">Dueño</label>
-                </div>
+                    <label for="autor">Autor</label>
+            </div>
+        
             <div class="form-floating mb-3 col-xl-6">
                     <select aria-label="Elegir editorial" class="form-select" id="editorial" th:field="*{editorial}">
                         <option selected value="">Elegir editorial</option>
-                        <option th:each="editorial : ${editoriales}" th:text="${editorial.nombre}"
+                        <option th:each="editorial : ${editoriales}" th:text="|${editorial.nombre}|"
                                 th:value="${editorial.id}"></option>
                     </select>
                     <label for="editorial">Dueño</label>
-                </div>
+            </div>
+        
             <div class="row">
                 <div class="col-xl-3">
-                    <button class="btn btn-success" th:text="${action == 'guardar'} ? 'Crear libro' : 'Guardar cambios'"
-                                type="submit">Guardar</button>
+                    <button 
+                        class="btn btn-success" 
+                        th:text="${action == 'guardar'} ? 'Crear libro' : 'Guardar cambios'"
+                        type="submit">
+                    </button>
                 </div>
             </div>
         </form>

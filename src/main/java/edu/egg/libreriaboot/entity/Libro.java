@@ -138,5 +138,9 @@ public class Libro {
         this.editorial = editorial;
     }
     
+    public String toString() {
     
+        return String.format("%-10d%-40s%-10d%-10d%-10d%-10d%-40s%-40s", isbn, titulo, anio, ejemplares, ejemplaresPrestados, ejemplaresRestantes, autor.getNombre(), editorial.getNombre());
+        
+    }
 }

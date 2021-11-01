@@ -1,5 +1,7 @@
 package edu.egg.libreriaboot.controller;
 
+import edu.egg.libreriaboot.entity.Autor;
+import edu.egg.libreriaboot.entity.Editorial;
 import edu.egg.libreriaboot.entity.Libro;
 import edu.egg.libreriaboot.excepcion.MiExcepcion;
 import edu.egg.libreriaboot.service.AutorService;
@@ -49,7 +51,7 @@ public class LibroController {
     @GetMapping("/editar/{id}")
     public ModelAndView editarLibro(@PathVariable String id) {
         ModelAndView mav = new ModelAndView("libro-formulario");
-        mav.addObject("mascota", libroService.buscarPorId(id));
+        mav.addObject("libro", libroService.buscarPorId(id));
         mav.addObject("autores", autorService.buscarTodas());
         mav.addObject("editoriales", editorialService.buscarTodas());
         mav.addObject("title", "Editar Libro");
@@ -64,8 +66,8 @@ public class LibroController {
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados) {
-        libroService.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados);
+    public RedirectView modificar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam Autor autor, @RequestParam Editorial editorial) {
+        libroService.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, autor, editorial);
         return new RedirectView("/libros");
     }
 

@@ -45,12 +45,16 @@
                         <td class="col-md-1 px-md-1 text-center" th:text="${libro.ejemplares}"></td>
                         <td class="col-md-1 px-md-1 text-center " th:text="${libro.ejemplaresPrestados}"></td>
                         <td class="col-md-1 px-md-1 text-center " th:text="${libro.ejemplaresRestantes}"></td>
-                        <td class="col-md-2 px-md-1" th:text="${libro.autor.nombre}"></td>
-                        <td class="col-md-2 px-md-1" th:text="${libro.editorial.nombre}"></td>
+                        <td class="col-md-2 px-md-1" th:text="|${libro.autor.nombre}|"></td>
+                        <td class="col-md-2 px-md-1" th:text="|${libro.editorial.nombre}|"></td>
                         <td class="col-md-2 px-md-1 d-flex justify-content-around w-100">
-                            <a class="btn btn-secondary btn-sm" th:href="@{/libros/editar/__${libro.id}__}">Editar</a>
-                            <form method="post">
-                                <button class="btn btn-info btn-sm" type="submit" th:action="@{/libros/eliminar/__${libro.id}__}">Eliminar</button>
+                            <a class="btn btn-secondary btn-sm" th:href="@{/libros/editar/__${libro.id}__}">
+                                Editar
+                            </a>
+                            <form method="post" th:action="@{/libros/eliminar/__${libro.id}__}">
+                              <button class="btn btn-info btn-sm" type="submit">
+                                Eliminar
+                              </button>
                             </form>
                         </td>
                     </tr>

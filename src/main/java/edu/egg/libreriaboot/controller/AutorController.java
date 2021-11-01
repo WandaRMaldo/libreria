@@ -37,8 +37,8 @@ public class AutorController {
     }
 
     @GetMapping("/editar/{id}")
-    public ModelAndView editarUsuario(@PathVariable String id) {
-        ModelAndView mav = new ModelAndView("editorial-formulario");
+    public ModelAndView editarAutor(@PathVariable String id) {
+        ModelAndView mav = new ModelAndView("autor-formulario");
         mav.addObject("autor", autorService.buscarPorId(id));
         mav.addObject("title", "Editar Autor");
         mav.addObject("action", "modificar");

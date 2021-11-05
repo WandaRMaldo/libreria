@@ -26,34 +26,29 @@
             <table class="table table-hover table-sm table-bordered">
                 <thead class="table-secondary text-center">
                     <tr>
-                        <th class="col-md-2 px-md-1" scope="col">Isbn</th>
-                        <th class="col-md-2 px-md-1" scope="col">Titulo</th>
-                        <th class="col-md-1 px-md-1" scope="col">Año</th>
-                        <th class="col-md-1 px-md-1" scope="col">Ejemplares</th>
-                        <th class="col-md-1 px-md-1" scope="col">Ejemplares Prestados</th>
-                        <th class="col-md-1 px-md-1" scope="col">Ejemplares Restantes</th>
-                        <th class="col-md-2 px-md-1" scope="col">Autor</th>
-                        <th class="col-md-2 px-md-1" scope="col">Editorial</th>
-                        <th class="col-md-2 px-md-1" scope="col">Acciones</th>
+                        <th class="col-md-1 px-md-1 text-center" scope="col">ISBN</th>
+                        <th class="col-md-5 px-md-1" scope="col">Titulo</th>
+                        <th class="col-md-1 px-md-1" scope="col">Prestados</th>
+                        <th class="col-md-1 px-md-1" scope="col">Restantes</th>
+                        <th class="col-md-1 px-md-1" scope="col">Estado</th>
+                        <th class="col-md-4 px-md-2" scope="col">Acciones</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     <tr th:each="libro : ${libros}">
-                        <td class="col-md-2 px-md-1 text-center" scope="row" th:text="${libro.isbn}"></td>
-                        <td class="col-md-2 px-md-2" th:text="${libro.titulo}"></td>
-                        <td class="col-md-1 px-md-1" th:text="${libro.anio}"></td>
-                        <td class="col-md-1 px-md-1 text-center" th:text="${libro.ejemplares}"></td>
+                        <td class="col-md-1 px-md-1 text-center" scope="row" th:text="${libro.isbn}"></td>
+                        <td class="col-md-5 px-md-2" >
+                            <span th:text="|${libro.titulo} (${libro.autor.nombre}, ${libro.editorial.nombre})|"></span>
+                        </td>
                         <td class="col-md-1 px-md-1 text-center " th:text="${libro.ejemplaresPrestados}"></td>
                         <td class="col-md-1 px-md-1 text-center " th:text="${libro.ejemplaresRestantes}"></td>
-                        <td class="col-md-2 px-md-1" th:text="|${libro.autor.nombre}|"></td>
-                        <td class="col-md-2 px-md-1" th:text="|${libro.editorial.nombre}|"></td>
-                        <td class="col-md-2 px-md-1 d-flex justify-content-around w-100">
+                        <td class="col-md-1 px-md-1 text-center" th:text="${libro.alta} ? 'Alta' : 'Baja'" ></td>
+                        <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
                             <a class="btn btn-secondary btn-sm" th:href="@{/libros/editar/__${libro.id}__}">
                                 Editar
                             </a>
                             <form method="post" th:action="@{/libros/eliminar/__${libro.id}__}">
-                              <button class="btn btn-info btn-sm" type="submit">
-                                Eliminar
+                              <button class="btn btn-info btn-sm" type="submit" th:text="${libro.alta} ? 'Dar Baja' : 'Dar Alta'">
                               </button>
                             </form>
                         </td>

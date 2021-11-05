@@ -43,7 +43,7 @@ public class AutorService {
         Optional<Autor> autorOptional = autorRepository.findById(id) ; /*veamos si funciona*/
         if (autorOptional.isPresent()) {
             Autor autor = autorOptional.get();
-            autor.setAlta(false);
+            autor.setAlta(!autor.getAlta());
             autorRepository.save(autor);
         }else{
             throw new MiExcepcion("No se encontro el autor solicitado");

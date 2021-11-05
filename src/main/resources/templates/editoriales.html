@@ -26,17 +26,20 @@
             <table class="table table-hover table-sm table-bordered">
                 <thead class="table-secondary text-center">
                     <tr>
-                        <th class="col-md-8 px-md-6" scope="col">Nombre</th>
+                        <th class="col-md-6 px-md-4" scope="col">Nombre</th>
+                        <th class="col-md-2 px-md-1" scope="col">Estado</th>
                         <th class="col-md-4 px-md-2" scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="editorial : ${editoriales}">
-                        <td class="col-md-8 px-md-6" th:text="${editorial.nombre}"></td>
+                        <td class="col-md-6 px-md-4" th:text="${editorial.nombre}"></td>
+                        <td class="col-md-2 px-md-1 text-center" th:text="${editorial.alta} ? 'Alta' : 'Baja'" ></td>
                         <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
                             <a class="btn btn-secondary btn-sm" th:href="@{/editoriales/editar/__${editorial.id}__}">Editar</a>
                             <form method="post" th:action="@{/editoriales/eliminar/__${editorial.id}__}">
-                                <button class="btn btn-info btn-sm" type="submit">Eliminar</button>
+                                <button class="btn btn-info btn-sm" type="submit" th:text="${editorial.alta} ? 'Dar Baja' : 'Dar Alta'">
+                                </button>
                             </form>
                         </td>
                     </tr>

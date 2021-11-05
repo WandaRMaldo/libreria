@@ -54,7 +54,7 @@ public class EditorialService {
         Optional<Editorial> editorialOptional = editorialRepository.findById(id); /*veamos si funciona*/
         if (editorialOptional.isPresent()) {
             Editorial editorial = editorialOptional.get();
-            editorial.setAlta(false);
+            editorial.setAlta(!editorial.getAlta());
             editorialRepository.save(editorial);
         }else{
             throw new MiExcepcion("No se encontro la editorial solicitado");

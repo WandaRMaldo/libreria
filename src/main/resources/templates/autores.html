@@ -26,19 +26,23 @@
             <table class="table table-hover table-sm table-bordered">
                 <thead class="table-secondary text-center">
                     <tr>
-                        <th class="col-md-8 px-md-6" scope="col">Nombre</th>
+                        <th class="col-md-6 px-md-4" scope="col">Nombre</th>
+                        <th class="col-md-2 px-md-1" scope="col">Estado</th>
                         <th class="col-md-4 px-md-2" scope="col">Acciones</th>
+                        
                     </tr>
                 </thead>
                 <tbody>
                     <tr th:each="autor : ${autores}">
-                        <td class="col-md-8 px-md-6" th:text="${autor.nombre}"></td>
-                        <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
-                            <a class="btn btn-secondary btn-sm" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
-                            <form method="post">
-                                <button class="btn btn-info btn-sm" type="submit" th:action="@{/autores/eliminar/__${autor.id}__}">Eliminar</button>
-                            </form>
-                        </td>
+                            <td class="col-md-6 px-md-4" th:text="${autor.nombre}"></td>
+                            <td class="col-md-2 px-md-1 text-center" th:text="${autor.alta} ? 'Alta' : 'Baja'" ></td>
+                            <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
+                                <a class="btn btn-secondary btn-sm" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
+                                <form method="post" th:action="@{/autores/eliminar/__${autor.id}__}">
+                                    <button class="btn btn-info btn-sm" type="submit" th:text="${autor.alta} ? 'Dar Baja' : 'Dar Alta'">
+                                    </button>    
+                                </form>
+                            </td>   
                     </tr>
                 </tbody>
             </table>

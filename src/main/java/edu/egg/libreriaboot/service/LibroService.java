@@ -57,7 +57,7 @@ public class LibroService {
         Optional<Libro> libroOptional = libroRepository.findById(id) ; /*veamos si funciona*/
         if (libroOptional.isPresent()) {
             Libro libro = libroOptional.get();
-            libro.setAlta(false);
+            libro.setAlta(!libro.getAlta());
             libroRepository.save(libro);
         }else{
             throw new MiExcepcion("No se encontro el libro solicitado");

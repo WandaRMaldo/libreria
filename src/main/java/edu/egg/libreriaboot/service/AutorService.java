@@ -19,18 +19,35 @@ public class AutorService {
     public void crear(String nombre) throws MiExcepcion{
         
         if (nombre == null || nombre.isEmpty()) {
-            throw new MiExcepcion("El nombre del autor no puede ser nulo");
+            throw new MiExcepcion("EL NOMBRE DEL AUTOR ES OBLIGATORIO");
+        }
+        
+        if (autorRepository.buscarAutorPorNombre(nombre) != null) {
+            throw new MiExcepcion("YA EXISTE UN AUTOR CON ESE NOMBRE");
         }
         
         Autor autor = new Autor();
-        autor.setNombre(nombre);
+        autor.setNombre(nombre.toUpperCase());
         
         autorRepository.save(autor);
     }
     
     @Transactional
-    public void modificar(String id, String nombre){
-        autorRepository.modificar(id, nombre);
+    public void modificar(String id, String nombre) throws MiExcepcion{
+        Autor autor = autorRepository.findById(id).orElse(null);
+        if (autor == null) {
+            throw new MiExcepcion("NO EXISTE EL AUTOR");
+        }
+        
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new MiExcepcion("EL NOMBRE DEL AUTOR ES OBLIGATORIO");
+        }
+
+        if (autorRepository.buscarAutorPorNombre(nombre) != null) {
+            throw new MiExcepcion("YA EXISTE UN AUTOR CON ESE NOMBRE");
+        }
+
+        autorRepository.modificar(id, nombre.toUpperCase());
     }
     
     @Transactional(readOnly = true)

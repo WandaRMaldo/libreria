@@ -38,7 +38,7 @@
                         <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
                             <a class="btn btn-secondary btn-sm" th:href="@{/editoriales/editar/__${editorial.id}__}">Editar</a>
                             <form method="post" th:action="@{/editoriales/eliminar/__${editorial.id}__}">
-                                <button class="btn btn-info btn-sm" type="submit" th:text="${editorial.alta} ? 'Dar Baja' : 'Dar Alta'">
+                                <button class="btn btn-info btn-sm" type="submit" th:text="${editorial.alta} ? 'Eliminar' : 'Habilitar'">
                                 </button>
                             </form>
                         </td>

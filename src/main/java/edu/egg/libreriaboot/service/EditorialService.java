@@ -24,18 +24,34 @@ public class EditorialService {
     public void crear(String nombre) throws MiExcepcion{
         
         if (nombre == null || nombre.isEmpty()) {
-            throw new MiExcepcion("El nombre de la editorial no puede ser nulo");
+            throw new MiExcepcion("EL NOMBRE ES OBLIGATORIO");
+        }
+        
+        if (editorialRepository.buscarPorNombre(nombre) != null) {
+            throw new MiExcepcion("YA EXISTE UNA EDITORIAL CON ESE NOMBRE");
         }
         
         Editorial editorial = new Editorial();
-        editorial.setNombre(nombre);
+        editorial.setNombre(nombre.toUpperCase());
         
         editorialRepository.save(editorial);
     }
     
     @Transactional
-    public void modificar(String id, String nombre){
-        editorialRepository.modificar(id, nombre);
+    public void modificar(String id, String nombre) throws MiExcepcion{
+        Editorial editorial = editorialRepository.findById(id).orElse(null);
+        if (editorial == null) {
+            throw new MiExcepcion("NO EXISTE EL AUTOR");
+        }
+        
+        if (nombre == null || nombre.trim().isEmpty()) {
+            throw new MiExcepcion("EL NOMBRE DEL AUTOR ES OBLIGATORIO");
+        }
+
+        if (editorialRepository.buscarPorNombre(nombre) != null) {
+            throw new MiExcepcion("YA EXISTE UN AUTOR CON ESE NOMBRE");
+        }
+        editorialRepository.modificar(id, nombre.toUpperCase());
     }
     
     @Transactional(readOnly = true)

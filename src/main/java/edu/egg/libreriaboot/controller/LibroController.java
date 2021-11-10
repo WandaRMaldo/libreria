@@ -7,6 +7,8 @@ import edu.egg.libreriaboot.excepcion.MiExcepcion;
 import edu.egg.libreriaboot.service.AutorService;
 import edu.egg.libreriaboot.service.EditorialService;
 import edu.egg.libreriaboot.service.LibroService;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
@@ -31,8 +35,13 @@ public class LibroController {
     private EditorialService editorialService;
     
     @GetMapping
-    public ModelAndView mostrarTodos(){
+    public ModelAndView mostrarTodos(HttpServletRequest request){
         ModelAndView mav = new ModelAndView("libros");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            mav.addObject("exito", flashMap.get("exito-name"));
+            mav.addObject("error", flashMap.get("error-name"));
+        }
         mav.addObject("libros", libroService.buscarTodas());
         return mav;
     }
@@ -60,14 +69,27 @@ public class LibroController {
     }
     
     @PostMapping("/guardar") /* post:  recibir informacion de un formulario */
-    public RedirectView guardar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam("autor") String idAutor, @RequestParam("editorial") String idEditorial) {
-        libroService.crear(isbn, titulo, anio, ejemplares, ejemplaresPrestados, idAutor, idEditorial);
+    public RedirectView guardar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam("autor") String idAutor, @RequestParam("editorial") String idEditorial, RedirectAttributes attributes) throws MiExcepcion {
+        try {
+            libroService.crear(isbn, titulo, anio, ejemplares, ejemplaresPrestados, idAutor, idEditorial);
+            attributes.addFlashAttribute("exito-name", "EL LIBRO SE GUARDO EXITOSAMENTE");
+        } catch (MiExcepcion e) {
+            attributes.addFlashAttribute("error-name", e.getMessage());
+            //return new RedirectView("/libros/crear");
+        }
+        
         return new RedirectView("/libros");
     }
 
     @PostMapping("/modificar")
-    public RedirectView modificar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam Autor autor, @RequestParam Editorial editorial) {
-        libroService.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, autor, editorial);
+    public RedirectView modificar(@RequestParam String id, @RequestParam Long isbn, @RequestParam String titulo, @RequestParam Integer anio, @RequestParam Integer ejemplares, @RequestParam Integer ejemplaresPrestados, @RequestParam Autor autor, @RequestParam Editorial editorial, RedirectAttributes attributes) throws MiExcepcion {
+        try {
+            libroService.modificar(id, isbn, titulo, anio, ejemplares, ejemplaresPrestados, autor, editorial);
+            attributes.addFlashAttribute("exito-name", "LIBRO MODIFICADO CON ÉXITO");
+        } catch (MiExcepcion e) {
+            attributes.addFlashAttribute("error-name", e.getMessage());
+        }
+        
         return new RedirectView("/libros");
     }
 

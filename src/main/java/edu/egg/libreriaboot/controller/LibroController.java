@@ -47,8 +47,13 @@ public class LibroController {
     }
     
     @GetMapping("/crear")
-    public ModelAndView crearLibro() {
+    public ModelAndView crearLibro(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("libro-formulario");
+        Map<String, ?> flashMap = RequestContextUtils.getInputFlashMap(request);
+        if (flashMap != null) {
+            //mav.addObject("exito", flashMap.get("exito-name"));
+            mav.addObject("error", flashMap.get("error-name"));
+        }
         mav.addObject("libro", new Libro());
         mav.addObject("autores", autorService.buscarTodas());
         mav.addObject("editoriales", editorialService.buscarTodas());
@@ -59,7 +64,7 @@ public class LibroController {
     
     @GetMapping("/editar/{id}")
     public ModelAndView editarLibro(@PathVariable String id) {
-        ModelAndView mav = new ModelAndView("libro-formulario");
+        ModelAndView mav = new ModelAndView("libro-formulario");  
         mav.addObject("libro", libroService.buscarPorId(id));
         mav.addObject("autores", autorService.buscarTodas());
         mav.addObject("editoriales", editorialService.buscarTodas());
@@ -75,7 +80,7 @@ public class LibroController {
             attributes.addFlashAttribute("exito-name", "EL LIBRO SE GUARDO EXITOSAMENTE");
         } catch (MiExcepcion e) {
             attributes.addFlashAttribute("error-name", e.getMessage());
-            //return new RedirectView("/libros/crear");
+            return new RedirectView("/libros/crear");
         }
         
         return new RedirectView("/libros");

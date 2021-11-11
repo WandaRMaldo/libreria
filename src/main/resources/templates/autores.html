@@ -40,9 +40,13 @@
                             <td class="col-md-2 px-md-1 text-center" th:text="${autor.alta} ? 'Alta' : 'Baja'" ></td>
                             <td class="col-md-4 px-md-2 d-flex justify-content-around w-100">
                                 <a class="btn btn-secondary btn-sm" th:href="@{/autores/editar/__${autor.id}__}">Editar</a>
-                                <form method="post" th:action="@{/autores/eliminar/__${autor.id}__}">
-                                    <button class="btn btn-info btn-sm" type="submit" th:text="${autor.alta} ? 'Eliminar' : 'Habilitar'">
-                                    </button>    
+                                
+                                <form th:if=${autor.alta} method="post" th:action="@{/autores/eliminar/__${autor.id}__}">
+                                    <button class="btn btn-outline-danger btn-sm" type="submit">Deshabilitar</button>
+                                </form>
+
+                                <form th:if=${!autor.alta} method="post" th:action="@{/autores/eliminar/__${autor.id}__}">
+                                    <button class="btn btn-outline-success btn-sm" type="submit">Habilitar</button>
                                 </form>
                             </td>   
                     </tr>

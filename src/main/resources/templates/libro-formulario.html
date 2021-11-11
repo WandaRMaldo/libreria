@@ -17,6 +17,7 @@
     <nav th:replace="fragmentos :: navbar"></nav>
 
     <div class="container mt-5 main">
+        <div class="alert alert-danger col-6" th:if="${error != null}" th:text="${error}"></div>
         <h2 th:text="${title}"></h2>
         <hr class="mb-5 col-xl-12" />
         <form autocomplete="off" class="needs-validation" id="formulario" method="POST" novalidate
